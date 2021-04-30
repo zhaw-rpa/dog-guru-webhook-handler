@@ -1,7 +1,8 @@
-package ch.zhaw.gpi.user;
+package ch.zhaw.rpa.dogguruwebhookhandler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * Hauptklasse für die RestService-Template-SpringBoot-Applikation
@@ -9,8 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author scep
  */
 @SpringBootApplication
-public class RestServiceTemplateApplication {
+@EnableDiscoveryClient
+public class DogGuruWebhookHandlerApplication {
     public static void main(String[] args){
-        SpringApplication.run(RestServiceTemplateApplication.class, args);
+        SpringApplication.run(DogGuruWebhookHandlerApplication.class, args);
     }
 }

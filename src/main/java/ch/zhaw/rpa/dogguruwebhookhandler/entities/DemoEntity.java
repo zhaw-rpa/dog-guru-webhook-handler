@@ -1,4 +1,4 @@
-package ch.zhaw.gpi.user.entities;
+package ch.zhaw.rpa.dogguruwebhookhandler.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

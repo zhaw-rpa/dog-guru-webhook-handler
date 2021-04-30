@@ -1,6 +1,7 @@
 Björn Scheppler, 30.4.2021
 
-# REST-Service Template (rest-service-template)
+# Dog Guru Webhook Handler für Azure Spring Cloud
+TBD...
 Dieses Maven-Projekt kann genutzt werden als Startpunkt für eigene auf Spring Boot, JPA und REST beruhende Projekte. Enthalten sind folgende Funktionalitäten:
 1. Spring Boot
 2. Spring Boot Starter Web für Tomcat sowie REST-Komponenten
