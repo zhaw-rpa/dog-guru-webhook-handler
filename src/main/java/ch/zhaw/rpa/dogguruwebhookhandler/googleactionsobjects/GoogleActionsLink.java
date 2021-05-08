@@ -7,11 +7,9 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @Builder
-public class GoogleActionsCard {
-    private String title;
-    private String text;
-    private GoogleActionsImage image;
-    private GoogleActionsLink button;
+@ToString
+public class GoogleActionsLink {
+    private String name;
+    private GoogleActionsOpenUrl open;
 }

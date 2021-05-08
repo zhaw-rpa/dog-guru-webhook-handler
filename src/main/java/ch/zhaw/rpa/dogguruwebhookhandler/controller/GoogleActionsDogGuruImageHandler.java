@@ -9,6 +9,7 @@ import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsPromp
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsRequest;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsResponse;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimple;
+import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogDescriptionHandler;
 import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogImageHandler;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,9 @@ public class GoogleActionsDogGuruImageHandler {
 
     @Autowired
     private DogImageHandler dogImageHandler;
+
+    @Autowired
+    private DogDescriptionHandler dogDescriptionHandler;
 
     @GetMapping(value = "/test")
     public String testApi() {
@@ -36,9 +40,10 @@ public class GoogleActionsDogGuruImageHandler {
 
         if (handlerName.equals("getDogImageHandler")) {
             response = dogImageHandler.handleDogImageRequest(body);
-        } else if (handlerName.equals("getDogDescriptionHandler")) {
-            // Wikipedia API mit RestTemplate: https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&titles=Yorkshire%20Terrier
-            response = null;
+        } else if (handlerName.equals("getDogDescriptionAsPlainTextHandler")) {
+            response = dogDescriptionHandler.handleDogDescriptionAsPlainTextRequest(body);
+        } else if (handlerName.equals("getDogDescriptionAsHtmlHandler")) {
+            response = dogDescriptionHandler.handleDogDescriptionAsHtmlRequest(body);
         } else {
             // Response no handler found zusammenstellen
             response = GoogleActionsResponse.builder()
