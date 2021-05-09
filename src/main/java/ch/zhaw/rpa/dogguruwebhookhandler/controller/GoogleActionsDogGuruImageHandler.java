@@ -1,5 +1,8 @@
 package ch.zhaw.rpa.dogguruwebhookhandler.controller;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,14 +35,15 @@ public class GoogleActionsDogGuruImageHandler {
     }
 
     @PostMapping(value = "/main-handler")
-    public GoogleActionsResponse handleGoogleActionsRequest(@RequestBody GoogleActionsRequest body) {
+    public GoogleActionsResponse handleGoogleActionsRequest(@RequestBody GoogleActionsRequest body) throws InterruptedException, ExecutionException {
         // Handler ermitteln
         String handlerName = body.getHandler().getName();
 
         GoogleActionsResponse response;
 
         if (handlerName.equals("getDogImageHandler")) {
-            response = dogImageHandler.handleDogImageRequest(body);
+            CompletableFuture<GoogleActionsResponse> responseFuture = dogImageHandler.handleDogImageRequest(body);
+            response = responseFuture.get();
         } else if (handlerName.equals("getDogDescriptionAsPlainTextHandler")) {
             response = dogDescriptionHandler.handleDogDescriptionAsPlainTextRequest(body);
         } else if (handlerName.equals("getDogDescriptionAsHtmlHandler")) {
