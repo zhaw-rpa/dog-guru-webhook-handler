@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @RequestMapping(value = "api")
-public class GoogleActionsDogGuruImageHandler {
+public class GoogleActionsDogGuruHandler {
 
     @Autowired
     private DogImageHandler dogImageHandler;
