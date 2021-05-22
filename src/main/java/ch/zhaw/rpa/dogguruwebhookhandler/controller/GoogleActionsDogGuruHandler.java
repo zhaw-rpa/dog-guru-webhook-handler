@@ -42,15 +42,6 @@ public class GoogleActionsDogGuruHandler {
 
         if (handlerName.equals("getDogImageHandler")) {
             response = dogImageHandler.handleDogImageRequest(body);
-        } else if (handlerName.equals("getAwaitedResult")) {
-            response = GoogleActionsResponse.builder()
-                .prompt(GoogleActionsPrompt.builder()
-                        .firstSimple(GoogleActionsSimple.builder()
-                                .speech("Da ist Dein Resultat").build())
-                        .build())
-                .session(body.getSession())
-                .scene(body.getScene())
-                .build();
         } else if (handlerName.equals("getDogDescriptionAsPlainTextHandler")) {
             response = dogDescriptionHandler.handleDogDescriptionAsPlainTextRequest(body);
         } else if (handlerName.equals("getDogDescriptionAsHtmlHandler")) {
