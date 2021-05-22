@@ -1,9 +1,9 @@
 package ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects;
 
-import java.util.Map;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,9 +11,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class GoogleActionsScene {
+@NoArgsConstructor
+@AllArgsConstructor
+public class GoogleActionsNextScene {
     private String name;
-    private String slotFillingStatus;
-    private Map<String, Object> slots;
-    private GoogleActionsNextScene next;
 }
