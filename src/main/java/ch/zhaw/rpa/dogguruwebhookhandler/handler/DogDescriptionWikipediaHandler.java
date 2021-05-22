@@ -15,7 +15,7 @@ import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimpl
 import ch.zhaw.rpa.dogguruwebhookhandler.wikipedia.WikipediaRestClient;
 
 @Component
-public class DogDescriptionHandler {
+public class DogDescriptionWikipediaHandler {
 
     private static final Integer EXTRACT_LENGTH = 500;
 

@@ -11,8 +11,8 @@ import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsPromp
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsRequest;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsResponse;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimple;
-import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogDescriptionHandler;
-import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogImageHandler;
+import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogDescriptionWikipediaHandler;
+import ch.zhaw.rpa.dogguruwebhookhandler.handler.UiPathHandler;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GoogleActionsDogGuruHandler {
 
     @Autowired
-    private DogImageHandler dogImageHandler;
+    private UiPathHandler uiPathHandler;
 
     @Autowired
-    private DogDescriptionHandler dogDescriptionHandler;
+    private DogDescriptionWikipediaHandler dogDescriptionWikipediaHandler;
 
     @GetMapping(value = "/test")
     public String testApi() {
@@ -40,12 +40,12 @@ public class GoogleActionsDogGuruHandler {
 
         GoogleActionsResponse response;
 
-        if (handlerName.equals("getDogImageHandler")) {
-            response = dogImageHandler.handleDogImageRequest(body);
+        if (handlerName.equals("getDogImageHandler") || handlerName.equals("getDogDescriptionFromHundeoHandler")) {
+            response = uiPathHandler.handleUiPathRequest(body, handlerName);
         } else if (handlerName.equals("getDogDescriptionAsPlainTextHandler")) {
-            response = dogDescriptionHandler.handleDogDescriptionAsPlainTextRequest(body);
+            response = dogDescriptionWikipediaHandler.handleDogDescriptionAsPlainTextRequest(body);
         } else if (handlerName.equals("getDogDescriptionAsHtmlHandler")) {
-            response = dogDescriptionHandler.handleDogDescriptionAsHtmlRequest(body);
+            response = dogDescriptionWikipediaHandler.handleDogDescriptionAsHtmlRequest(body);
         } else {
             // Response no handler found zusammenstellen
             response = GoogleActionsResponse.builder()

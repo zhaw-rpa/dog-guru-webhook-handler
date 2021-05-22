@@ -35,7 +35,7 @@ public class UiPathAsyncJobHandler {
             if(outputArguments == null || !outputArguments.getString("out_exceptionDescription").isEmpty()) {
                 System.out.println("Log: Job fehlgeschlagen");
                 sessionState.setUiPathJobState("failed");
-                sessionState.setUiPathExceptionMessage(outputArguments == null ? "Das Suchen nach einem Bild ist fehlgeschlagen." : outputArguments.getString("out_exceptionDescription"));
+                sessionState.setUiPathExceptionMessage(outputArguments == null ? "Die Suche auf Hundeo ist fehlgeschlagen." : outputArguments.getString("out_exceptionDescription"));
             } else {
                 System.out.println("Log: Job erfolgreich durchgeführt");
                 sessionState.setUiPathJobState("successfull");
