@@ -12,10 +12,10 @@ import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsPromp
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsRequest;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsResponse;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimple;
-import ch.zhaw.rpa.dogguruwebhookhandler.wikipedia.WikipediaRestClient;
+import ch.zhaw.rpa.dogguruwebhookhandler.restclients.WikipediaRestClient;
 
 @Component
-public class DogDescriptionWikipediaHandler {
+public class WikipediaHandler {
 
     private static final Integer EXTRACT_LENGTH = 500;
 

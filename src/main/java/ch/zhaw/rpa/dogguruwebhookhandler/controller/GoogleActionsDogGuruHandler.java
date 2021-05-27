@@ -11,8 +11,8 @@ import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsPromp
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsRequest;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsResponse;
 import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimple;
-import ch.zhaw.rpa.dogguruwebhookhandler.handler.DogDescriptionWikipediaHandler;
 import ch.zhaw.rpa.dogguruwebhookhandler.handler.UiPathHandler;
+import ch.zhaw.rpa.dogguruwebhookhandler.handler.WikipediaHandler;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class GoogleActionsDogGuruHandler {
     private UiPathHandler uiPathHandler;
 
     @Autowired
-    private DogDescriptionWikipediaHandler dogDescriptionWikipediaHandler;
+    private WikipediaHandler wikipediaHandler;
 
     @GetMapping(value = "/test")
     public String testApi() {
@@ -43,9 +43,9 @@ public class GoogleActionsDogGuruHandler {
         if (handlerName.equals("getDogImageHandler") || handlerName.equals("getDogDescriptionFromHundeoHandler")) {
             response = uiPathHandler.handleUiPathRequest(body, handlerName);
         } else if (handlerName.equals("getDogDescriptionAsPlainTextHandler")) {
-            response = dogDescriptionWikipediaHandler.handleDogDescriptionAsPlainTextRequest(body);
+            response = wikipediaHandler.handleDogDescriptionAsPlainTextRequest(body);
         } else if (handlerName.equals("getDogDescriptionAsHtmlHandler")) {
-            response = dogDescriptionWikipediaHandler.handleDogDescriptionAsHtmlRequest(body);
+            response = wikipediaHandler.handleDogDescriptionAsHtmlRequest(body);
         } else {
             // Response no handler found zusammenstellen
             response = GoogleActionsResponse.builder()

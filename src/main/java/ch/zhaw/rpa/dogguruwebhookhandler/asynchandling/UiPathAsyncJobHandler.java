@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import ch.zhaw.rpa.dogguruwebhookhandler.uipath.UiPathOrchestratorRestClient;
+import ch.zhaw.rpa.dogguruwebhookhandler.restclients.UiPathOrchestratorRestClient;
 
 @Component
 public class UiPathAsyncJobHandler {

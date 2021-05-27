@@ -1,4 +1,4 @@
-package ch.zhaw.rpa.dogguruwebhookhandler.wikipedia;
+package ch.zhaw.rpa.dogguruwebhookhandler.restclients;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

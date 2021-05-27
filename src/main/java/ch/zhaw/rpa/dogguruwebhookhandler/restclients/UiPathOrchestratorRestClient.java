@@ -1,4 +1,4 @@
-package ch.zhaw.rpa.dogguruwebhookhandler.uipath;
+package ch.zhaw.rpa.dogguruwebhookhandler.restclients;
 
 import javax.annotation.PostConstruct;
 
@@ -38,6 +38,9 @@ public class UiPathOrchestratorRestClient {
     @Value("${uipath.user-key}")
     private String userKey;
 
+    @Value("${uipath.folder-id}")
+    private String folderId;
+
     private HttpHeaders httpHeaders;
 
     @PostConstruct
@@ -49,6 +52,7 @@ public class UiPathOrchestratorRestClient {
         httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.set("X-UIPATH-TenantName", tenantName);
+        httpHeaders.set("X-UIPATH-OrganizationUnitId", folderId);
     }
 
     public String getReleaseKeyByProcessKey(String processKey) {
