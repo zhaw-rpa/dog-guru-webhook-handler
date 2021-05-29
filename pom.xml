@@ -43,17 +43,17 @@
       <groupId>org.projectlombok</groupId>  
       <artifactId>lombok</artifactId>  
       <version>1.18.20</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.jsoup</groupId>  
+      <artifactId>jsoup</artifactId>  
+      <version>1.13.1</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.json</groupId>  
+      <artifactId>json</artifactId>  
+      <version>20210307</version> 
     </dependency> 
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>1.13.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20210307</version>
-    </dependency>
   </dependencies>  
   <build> 
     <plugins> 
@@ -69,7 +69,7 @@
           <schemaVersion>v2</schemaVersion>
           <subscriptionId>769be83a-8db4-452a-9d5b-110932eb8b95</subscriptionId>
           <resourceGroup>appsvc_linux_centralus</resourceGroup>
-          <appName>rpava-dogguru-springboot-scep</appName>
+          <appName>dog-guru-middleware-scep</appName>
           <pricingTier>F1</pricingTier>
           <region>centralus</region>
           <appServicePlanName>appsvc_linux_centralus</appServicePlanName>

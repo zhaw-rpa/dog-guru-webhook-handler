@@ -48,10 +48,12 @@ public class GoogleActionsDogGuruHandler {
             response = wikipediaHandler.handleDogDescriptionAsHtmlRequest(body);
         } else {
             // Response no handler found zusammenstellen
+           
             response = GoogleActionsResponse.builder()
                 .prompt(GoogleActionsPrompt.builder()
                         .firstSimple(GoogleActionsSimple.builder()
-                                .speech("Es gibt keinen Handler für '" + handlerName + "'").build())
+                                .speech("Es gibt keinen Handler für '" + handlerName + "'")
+                                .build())
                         .build())
                 .session(body.getSession())
                 .scene(body.getScene())
