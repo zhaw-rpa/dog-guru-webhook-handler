@@ -42,13 +42,13 @@ public class UiPathHandler {
                 if (sessionState == null) {
                         // Neuen Session State erstellen
                         sessionState = GoogleActionsSessionState.builder().googleActionsSessionId(sessionId)
-                                        .googleActionsFirstRequestReceived(new Date()).build();
+                                        .googleActionsFirstRequestReceived(new Date()).uiPathExceptionMessage("").build();
 
                         stateService.addSessionState(sessionState);
 
                         // Async den Auftrag für den UiPath-Job erteilen
                         uiPathAsyncJobHandler.asyncRunUiPathDogGuruHunderassenlexikonConnector(sessionState, rasse);
-                        System.out.println("Log: AsyncHandler aufgerufen für Session Id " + sessionId);
+                        System.out.println("!!!!!!!!! AsyncHandler aufgerufen für Session Id " + sessionId);
 
                         // Etwas Zeit "schinten", aber so, dass Google Actions noch nicht abbricht und
                         // Text für Benutzer festlegen

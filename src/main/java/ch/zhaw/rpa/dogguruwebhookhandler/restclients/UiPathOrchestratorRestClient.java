@@ -172,7 +172,9 @@ public class UiPathOrchestratorRestClient {
             String accessToken = responseBody.getString("access_token");
 
             httpHeaders.setBearerAuth(accessToken);
+            System.out.println("!!!!!!!!! UiPath REST Authentication successful");
         } catch (Exception e) {
+            System.out.println("!!!!!!!!! UiPath REST Authentication failed");
             e.printStackTrace();
         }
         
