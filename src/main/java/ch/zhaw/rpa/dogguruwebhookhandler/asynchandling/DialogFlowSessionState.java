@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class GoogleActionsSessionState {
-    private String googleActionsSessionId;
-    private Date googleActionsFirstRequestReceived;
+public class DialogFlowSessionState {
+    private String DialogFlowSessionId;
+    private Date DialogFlowFirstRequestReceived;
     private String uiPathJobState;
     private JSONObject outputArguments;
     private String uiPathExceptionMessage;

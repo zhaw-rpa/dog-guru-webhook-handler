@@ -13,8 +13,14 @@
   </parent>  
   <properties> 
     <java.version>11</java.version> 
-  </properties>  
-  <dependencies> 
+  </properties>
+
+<dependencies>
+  <dependency>
+    <groupId>com.google.apis</groupId>
+    <artifactId>google-api-services-dialogflow</artifactId>
+    <version>v2-rev20230110-2.0.0</version>
+  </dependency>  
     <dependency> 
       <groupId>org.springframework.boot</groupId>  
       <artifactId>spring-boot-starter-web</artifactId> 
@@ -60,36 +66,6 @@
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
         <artifactId>spring-boot-maven-plugin</artifactId> 
-      </plugin>  
-      <plugin>
-        <groupId>com.microsoft.azure</groupId>
-        <artifactId>azure-webapp-maven-plugin</artifactId>
-        <version>1.14.0</version>
-        <configuration>
-          <schemaVersion>v2</schemaVersion>
-          <subscriptionId>769be83a-8db4-452a-9d5b-110932eb8b95</subscriptionId>
-          <resourceGroup>appsvc_linux_centralus</resourceGroup>
-          <appName>dog-guru-middleware-scep</appName>
-          <pricingTier>F1</pricingTier>
-          <region>centralus</region>
-          <appServicePlanName>appsvc_linux_centralus</appServicePlanName>
-          <appServicePlanResourceGroup>appsvc_linux_centralus</appServicePlanResourceGroup>
-          <runtime>
-            <os>Linux</os>
-            <javaVersion>Java 11</javaVersion>
-            <webContainer>Java SE</webContainer>
-          </runtime>
-          <deployment>
-            <resources>
-              <resource>
-                <directory>${project.basedir}/target</directory>
-                <includes>
-                  <include>*.jar</include>
-                </includes>
-              </resource>
-            </resources>
-          </deployment>
-        </configuration>
       </plugin>
     </plugins> 
   </build> 

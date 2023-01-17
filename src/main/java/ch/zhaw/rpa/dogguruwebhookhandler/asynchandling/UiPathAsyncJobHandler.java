@@ -14,7 +14,7 @@ public class UiPathAsyncJobHandler {
     private UiPathOrchestratorRestClient client;
     
     @Async
-    public void asyncRunUiPathDogGuruHunderassenlexikonConnector(GoogleActionsSessionState sessionState, String rasse) {
+    public void asyncRunUiPathDogGuruHunderassenlexikonConnector(DialogFlowSessionState sessionState, String rasse) {
         System.out.println("!!!!!!!!! Release Key angefordert von UiPath");
         String releaseKey = client.getReleaseKeyByProcessKey("dog-guru-hunderassenlexikon-connector");
 

@@ -1,17 +1,14 @@
 package ch.zhaw.rpa.dogguruwebhookhandler.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsCard;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsContentCard;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsLink;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsOpenUrl;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsPrompt;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsRequest;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsResponse;
-import ch.zhaw.rpa.dogguruwebhookhandler.googleactionsobjects.GoogleActionsSimple;
+import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2IntentMessage;
+import com.google.api.services.dialogflow.v2.model.GoogleCloudDialogflowV2WebhookRequest;
 import ch.zhaw.rpa.dogguruwebhookhandler.restclients.WikipediaRestClient;
 
 @Component
@@ -21,62 +18,49 @@ public class WikipediaHandler {
 
     @Autowired
     private WikipediaRestClient wikipediaRestClient;
-    
-    public GoogleActionsResponse handleDogDescriptionAsHtmlRequest(GoogleActionsRequest request){
-        String dogDescription = this.getDogDescription(request);
 
-        GoogleActionsResponse response = GoogleActionsResponse.builder()
-            .prompt(GoogleActionsPrompt.builder()
-                .content(GoogleActionsContentCard.builder()
-                    .card(GoogleActionsCard.builder()
-                        .text(dogDescription)
-                        .button(GoogleActionsLink.builder()
-                            .name("Gehe zu Wikipedia-Eintrag")
-                            .open(GoogleActionsOpenUrl.builder()
-                                .url(wikipediaRestClient.getWikipediaEntryUrl(this.getSearchTerm(request)))
-                                .build())
-                            .build())
-                        .build())
-                    .build())
-                .build())
-        .session(request.getSession())
-        .scene(request.getScene())
-        .build();
+    public GoogleCloudDialogflowV2IntentMessage handleDogDescriptionRequest(
+            GoogleCloudDialogflowV2WebhookRequest request, GoogleCloudDialogflowV2IntentMessage msg, String format) {
+        // Gesuchte Rasse auslesen
+        String breed = request.getQueryResult().getOutputContexts().get(0).getParameters().get("breed").toString();
 
-        return response;
-    }
+        // Beschreibung zu dieser Rasse erhalten
+        String dogDescription = wikipediaRestClient.getWikipediaExtract(EXTRACT_LENGTH, breed);
 
-    public GoogleActionsResponse handleDogDescriptionAsPlainTextRequest(GoogleActionsRequest request){
-        String dogDescription = this.getDogDescription(request);
-        dogDescription = Jsoup.parseBodyFragment(dogDescription).text();
-
-        GoogleActionsResponse response = GoogleActionsResponse.builder()
-            .prompt(GoogleActionsPrompt.builder()
-                .firstSimple(GoogleActionsSimple.builder()
-                    .text(dogDescription)
-                    .speech(dogDescription)
-                    .build())
-                .build())
-        .session(request.getSession())
-        .scene(request.getScene())
-        .build();
-
-        return response;
-    }
-
-    private String getDogDescription(GoogleActionsRequest request) {
-        String searchTerm = this.getSearchTerm(request);
-        String dogDescription = wikipediaRestClient.getWikipediaExtract(EXTRACT_LENGTH, searchTerm);
-
-        if(dogDescription.isEmpty()){
-            dogDescription = "Es wurde kein Wikipedia-Eintrag zu dieser Hunderasse gefunden.";
+        if (dogDescription.isEmpty()) {
+            dogDescription = "No Wikipedia article found for this breed.";
         }
 
-        return dogDescription;
-    }
+        // Wenn plaintext gewünscht, dann diesen aus dem HTML extrahieren
+        if (format.equals("plaintext")) {
+            dogDescription = Jsoup.parseBodyFragment(dogDescription).text();
+        }
 
-    private String getSearchTerm(GoogleActionsRequest request) {
-        String searchTerm = request.getSession().getParams().get("rasse").toString();
-        return searchTerm;
+        // Rich-Content-Payload in Form von verschachtelten HashMaps aufbereiten
+        // basierend auf https://cloud.google.com/dialogflow/es/docs/integrations/dialogflow-messenger?hl=en#rich
+        Map<String, Object> accordionMap = new HashMap<>();
+        accordionMap.put("type", "accordion");
+        accordionMap.put("title", "Wikipedia-Description of " + breed);
+        accordionMap.put("text", dogDescription);
+
+        Map<String, Object> iconMap = new HashMap<>();
+        iconMap.put("type", "chevron_right");
+        iconMap.put("color", "#FF9800");
+
+        Map<String, Object> linkMap = new HashMap<>();
+        linkMap.put("type", "button");
+        linkMap.put("text", "Wikipedia article");
+        linkMap.put("link", wikipediaRestClient.getWikipediaEntryUrl(breed));
+        linkMap.put("icon", iconMap);
+
+        Object richContentInnerArray[] = new Object[] {accordionMap, linkMap}; 
+
+        Object richContentOuterArray[] = new Object[] {richContentInnerArray};
+
+        Map<String, Object> richContentMap = new HashMap<>();
+        richContentMap.put("richContent", richContentOuterArray);
+        msg.setPayload(richContentMap);
+
+        return msg;
     }
 }

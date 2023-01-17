@@ -9,23 +9,23 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoogleActionsSessionStateService {
+public class DialogFlowSessionStateService {
 
-    private List<GoogleActionsSessionState> sessionStates = new ArrayList<>();
+    private List<DialogFlowSessionState> sessionStates = new ArrayList<>();
     
 
-    public void addSessionState(GoogleActionsSessionState sessionState) {
+    public void addSessionState(DialogFlowSessionState sessionState) {
         sessionStates.add(sessionState);
     }
 
-    public GoogleActionsSessionState getSessionStateBySessionId(String sessionId) {
+    public DialogFlowSessionState getSessionStateBySessionId(String sessionId) {
         return sessionStates.stream()
-            .filter(sessionState -> sessionId.equals(sessionState.getGoogleActionsSessionId()))
+            .filter(sessionState -> sessionId.equals(sessionState.getDialogFlowSessionId()))
             .findFirst()
             .orElse(null);
     }
 
-    public void removeSessionState(GoogleActionsSessionState sessionState) {
+    public void removeSessionState(DialogFlowSessionState sessionState) {
         sessionStates.remove(sessionState);
     }
     
@@ -36,10 +36,10 @@ public class GoogleActionsSessionStateService {
         Instant now = Instant.now();
         String sessionId;
 
-        for (GoogleActionsSessionState googleActionsSessionState : sessionStates) {
-            if(googleActionsSessionState.getGoogleActionsFirstRequestReceived().toInstant().isBefore(now.minus(1, ChronoUnit.HOURS))){
-                sessionId = googleActionsSessionState.getGoogleActionsSessionId();
-                sessionStates.remove(googleActionsSessionState);
+        for (DialogFlowSessionState DialogFlowSessionState : sessionStates) {
+            if(DialogFlowSessionState.getDialogFlowFirstRequestReceived().toInstant().isBefore(now.minus(1, ChronoUnit.HOURS))){
+                sessionId = DialogFlowSessionState.getDialogFlowSessionId();
+                sessionStates.remove(DialogFlowSessionState);
                 System.out.println("Log: Auto-removed " + sessionId);
             }
         }
